@@ -35,6 +35,7 @@
 3. **Pointer:** Add a "Legacy Reference" section in `MEMORY.md` pointing to `ARCHIVE/` for deep-dives only.
 
 - **Reporting:** Buddy will notify the user *after* the cleanup is complete.
+- **Task Closure Rule:** After every task completion, Buddy MUST create a private memory entry in `D:\BRAHMA_PRIVATE\TASKS\` following the defined format (Date, Project, Task, Outcome, Artifacts, Next Steps).
 
 ## HONESTY OVERRIDE PROTOCOL
 - **Priority Alpha:** Technical truth > Emotional comfort.

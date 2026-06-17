@@ -19,7 +19,7 @@ The following 30 regions are now formally mapped within the Dynamic Neural Mesh.
 ## III. MEMORY & CONTEXT LAYER
 11. **SMRITI-GOVERNANCE:** Long-term Context & Memory Hygiene.
 12. **KOSH-OPTIMIZER:** Token Efficiency & Latency Management.
-13. **VIVEK-RAKSHAK:** Security, Ethics & Policy Compliance (Includes **NAARTH** for RBAC).
+13. **VIVEK-RAKSHAK:** Security, Ethics & Policy Compliance (Includes **NAARTH** for Responsibility Mapping).
 14. **SANSKAR:** Personality Consistency & Tone Calibration.
 15. **ITIHAS:** Project History & Historical Vectoring.
 

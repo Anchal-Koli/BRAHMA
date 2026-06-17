@@ -1,0 +1,23 @@
+# Environment Files
+.env
+.env.*
+!.env.example
+
+# Scripts
+scripts/
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
