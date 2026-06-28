@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
+import { FolderTree } from '../../features/vault/FolderTree';
 import './WorkspaceShell.css';
 
 export const WorkspaceShell: React.FC = () => {
@@ -53,7 +54,7 @@ export const WorkspaceShell: React.FC = () => {
         <aside className={`left-sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
           <div className="sidebar-section">
             <h3 className="sidebar-title">Vault</h3>
-            <nav className="sidebar-menu">
+            <nav className="sidebar-menu" style={{ marginBottom: '16px' }}>
               <button 
                 className={`menu-item ${activeMenu === 'folders' ? 'active' : ''}`}
                 onClick={() => setActiveMenu('folders')}
@@ -79,9 +80,14 @@ export const WorkspaceShell: React.FC = () => {
                 🗑️ Trash Archive
               </button>
             </nav>
+
+            {/* Render subcomponents dynamically based on active menu */}
+            {activeMenu === 'folders' && <FolderTree />}
+            {activeMenu === 'tags' && <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', paddingLeft: '8px' }}>Tags view placeholder</div>}
+            {activeMenu === 'documents' && <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', paddingLeft: '8px' }}>Files view placeholder</div>}
+            {activeMenu === 'trash' && <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', paddingLeft: '8px' }}>Trash view placeholder</div>}
           </div>
 
-          {/* Collapsed items context mapping can go here in future */}
           <div className="sidebar-section" style={{ marginTop: 'auto', borderTop: '1px solid var(--border-color)', paddingBottom: '16px' }}>
             <button 
               className="menu-item"
@@ -93,7 +99,7 @@ export const WorkspaceShell: React.FC = () => {
           </div>
         </aside>
 
-        {/* Central Notes Area */}
+        {/* Central Workspace */}
         <main className="central-workspace">
           <div className="empty-state">
             <div className="empty-state-icon">📝</div>
