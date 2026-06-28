@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-sans: 'Outfit', sans-serif;
+  
+  /* Slate & Obsidian Dark Palette */
+  --bg-primary: hsl(220, 15%, 8%);
+  --bg-secondary: hsl(220, 15%, 12%);
+  --bg-tertiary: hsl(220, 15%, 16%);
+  
+  --text-primary: hsl(210, 15%, 95%);
+  --text-secondary: hsl(210, 10%, 75%);
+  --text-muted: hsl(210, 10%, 55%);
+  
+  /* Accents & Hues */
+  --accent-primary: hsl(250, 70%, 60%);
+  --accent-primary-hover: hsl(250, 70%, 65%);
+  --accent-success: hsl(150, 70%, 40%);
+  --accent-warning: hsl(35, 80%, 50%);
+  --accent-danger: hsl(0, 80%, 50%);
+  
+  /* Borders & Shadows */
+  --border-color: hsl(220, 15%, 20%);
+  --border-focus: hsl(250, 70%, 60%);
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(30, 34, 45, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-blur: blur(12px);
+  
+  /* Transitions */
+  --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+}
