@@ -3,6 +3,7 @@ import { useAuthStore } from '../../store/authStore';
 import { useNoteStore } from '../../store/noteStore';
 import { FolderTree } from '../../features/vault/FolderTree';
 import { NoteWorkspace } from '../../features/notes/NoteWorkspace';
+import { DocumentManager } from '../../features/vault/DocumentManager';
 import './WorkspaceShell.css';
 
 export const WorkspaceShell: React.FC = () => {
@@ -110,9 +111,11 @@ export const WorkspaceShell: React.FC = () => {
           </div>
         </aside>
 
-        {/* Central Workspace (Notes Editor / Empty State) */}
+        {/* Central Workspace (Toggles based on active sidebar tab selection) */}
         <main className="central-workspace">
-          {activeNote ? (
+          {activeMenu === 'documents' ? (
+            <DocumentManager />
+          ) : activeNote ? (
             <NoteWorkspace />
           ) : (
             <div className="empty-state">
