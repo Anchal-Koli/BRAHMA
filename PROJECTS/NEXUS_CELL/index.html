@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Digital Systems Internship - Diagnostic Center</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Main Application Header -->
+    <header>
+      <div class="logo-section">
+        <h1>NEXUS DIGITAL SYSTEMS</h1>
+        <p>Internship Cell • Diagnostic Hub v1.0</p>
+      </div>
+      
+      <!-- Primary Navigation -->
+      <nav class="nav-tabs">
+        <button id="nav-chatbot-btn" class="tab-btn active" data-target="chatbot-view">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Chatbot Diagnostic (Rudraksh)
+        </button>
+        <button id="nav-crud-btn" class="tab-btn" data-target="crud-view">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          CRUD Diagnostic (Deepanshu)
+        </button>
+        <button id="nav-report-btn" class="tab-btn" data-target="report-view">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          Diagnostic Summary & Plan
+        </button>
+      </nav>
+    </header>
+
+    <!-- VIEW 1: FAQ CHATBOT (Rudraksh's Diagnostic) -->
+    <main id="chatbot-view" class="content-view active">
+      <div class="grid-2col">
+        <!-- Main Chat interface -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+              Nexus FAQ Chatbot Prototype
+            </div>
+            <span class="badge badge-rudraksh">Intern 1: Rudraksh</span>
+          </div>
+          
+          <div class="chat-wrapper">
+            <!-- Chat history container -->
+            <div id="chat-history" class="chat-history"></div>
+            
+            <!-- Quick Suggestion Chips -->
+            <div id="quick-chips" class="quick-chips">
+              <button class="chip-btn">What is Nexus?</button>
+              <button class="chip-btn">What are the intern role pools?</button>
+              <button class="chip-btn">What is the EOD report format?</button>
+              <button class="chip-btn">Who reviews work?</button>
+              <button class="chip-btn">What is the weekly demo system?</button>
+              <button class="chip-btn">What is evidence?</button>
+            </div>
+            
+            <!-- Message Input Area -->
+            <div class="chat-input-area">
+              <input type="text" id="chat-input" class="chat-input" placeholder="Type a question about Nexus Internship Cell..." autocomplete="off">
+              <button id="send-btn" class="send-btn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Info -->
+        <div class="side-docs panel">
+          <div class="doc-section">
+            <h4>Diagnostic Target</h4>
+            <p><strong>FAQ Chatbot Prototype</strong></p>
+            <p>Tests Rudraksh's capability in building interactive AI interfaces and structuring static knowledge databases.</p>
+          </div>
+          <div class="doc-section">
+            <h4>Evaluation Criteria</h4>
+            <ul>
+              <li>Working chatbot interface</li>
+              <li>Knowledge base mapping structure</li>
+              <li>Clean layout & response logic</li>
+              <li>Performance limitations defined</li>
+            </ul>
+          </div>
+          <div class="doc-section">
+            <h4>Next Step (Major)</h4>
+            <p><strong>Scout Candidate Dashboard</strong></p>
+            <p>Convert candidate resumes, competency scoring weights, and evidence categories into a structured evaluation dashboard for management review.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW 2: CRUD EXPENSE + TASK TRACKER (Deepanshu's Diagnostic) -->
+    <main id="crud-view" class="content-view">
+      <!-- Stats Summary cards -->
+      <div class="crud-header-stats">
+        <div class="stat-card">
+          <span class="stat-title">Total tracked expenses</span>
+          <span id="stat-total-expenses" class="stat-value">₹0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Pending / Planned Actions</span>
+          <span id="stat-pending-payments" class="stat-value">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Active Divisions</span>
+          <span id="stat-active-projects" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <div class="crud-grid">
+        <!-- Form for CRUD -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title" id="form-panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              Add/Edit Track Item
+            </div>
+            <span class="badge badge-deepanshu">Intern 2: Deepanshu</span>
+          </div>
+
+          <form id="expense-form">
+            <input type="hidden" id="exp-id">
+            
+            <div class="form-group">
+              <label for="exp-date">Date</label>
+              <input type="date" id="exp-date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-project">Project / Division</label>
+              <select id="exp-project" class="form-control" required>
+                <option value="BHOOMI">BHOOMI (Agri Ecosystem)</option>
+                <option value="SMRITI">SMRITI (Cognitive Vault)</option>
+                <option value="ARADH">ARADH (Work Allocation)</option>
+                <option value="NAARTH">NAARTH (Responsibility Map)</option>
+                <option value="BUDDY">BUDDY (Persona Evolution)</option>
+                <option value="GENERAL">General Operations</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-vendor">Vendor / Person Name</label>
+              <input type="text" id="exp-vendor" class="form-control" placeholder="e.g. AWS Cloud, Stationery Shop" required>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-category">Category</label>
+              <input type="text" id="exp-category" class="form-control" placeholder="e.g. Infrastructure, Materials" required>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-amount">Amount (₹)</label>
+              <input type="number" id="exp-amount" class="form-control" placeholder="Enter amount" min="0" required>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-status">Payment Status</label>
+              <select id="exp-status" class="form-control" required>
+                <option value="planned">Planned</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="paid">Paid</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-reviewer">Reviewer</label>
+              <input type="text" id="exp-reviewer" class="form-control" placeholder="e.g. Priyanshi, Vijay" required>
+            </div>
+
+            <div class="form-group">
+              <label for="exp-remarks">Remarks</label>
+              <input type="text" id="exp-remarks" class="form-control" placeholder="Add optional details">
+            </div>
+
+            <div class="form-group">
+              <label for="exp-proof">Proof Link</label>
+              <input type="url" id="exp-proof" class="form-control" placeholder="https://drive.google.com/bill-pdf">
+            </div>
+
+            <div class="btn-group">
+              <button type="submit" id="form-submit-btn" class="btn btn-primary">Add Track Item</button>
+              <button type="button" id="form-reset-btn" class="btn btn-secondary">Reset</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Table Listing CRUD elements -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/></svg>
+              Operational Expense Log (Local Sandbox)
+            </div>
+          </div>
+          
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Project</th>
+                  <th>Vendor & Category</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Reviewer</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="expense-table-body">
+                <!-- Rows injected dynamically by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- VIEW 3: SYSTEM SUMMARY & STRATEGIC EXECUTION PLAN -->
+    <main id="report-view" class="content-view">
+      <div class="report-summary-box">
+        <h3>Nexus Internship Cell: 4-Week Strategic Track</h3>
+        <p>This cell aligns intern development directly with working Nexus systems. Rather than generic projects, both interns follow a structured track where diagnostics prove baseline skills before major features are handed over. No code is accepted without full handover guides, and dummy data filters are used to ensure system safety.</p>
+      </div>
+
+      <div class="report-grid">
+        <!-- Week-by-Week Execution Plan -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"/></svg>
+              Weekly Execution Milestones
+            </div>
+          </div>
+
+          <div class="criteria-list">
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Week 0: HR Setup</h5>
+                <p>Collect portfolios, sign confidentiality undertakings, structure EOD sheets.</p>
+              </div>
+              <span class="badge badge-rudraksh">HR Ready</span>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Week 1: Diagnostic + Wireframe</h5>
+                <p>Rudraksh builds FAQ Chatbot. Deepanshu builds local CRUD deploy proof.</p>
+              </div>
+              <span class="badge badge-deepanshu">In Progress</span>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Week 2: Major Project MVPs</h5>
+                <p>Rudraksh: Candidate Dashboard. Deepanshu: Expense + Task Tracker.</p>
+              </div>
+              <span class="badge badge-rudraksh">Week 2</span>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Week 3: Minor Project MVPs</h5>
+                <p>Rudraksh: Student Stage Tracker. Deepanshu: Manufacturing Shift Handover.</p>
+              </div>
+              <span class="badge badge-deepanshu">Week 3</span>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Week 4: Testing & Handover</h5>
+                <p>Integrate local feedback, finalize guides, run final audits with Priyanshi.</p>
+              </div>
+              <span class="badge badge-rudraksh">Week 4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evaluation Rubric -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.833 5.803A3 3 0 0110.5 5h3a3 3 0 012.667 1.803M7.833 5.803A7 7 0 005 12v6a2 2 0 002 2h10a2 2 0 002-2v-6a7 7 0 00-2.833-6.197M7.833 5.803a3 3 0 002.667 1.803m5.333-1.803a3 3 0 01-2.667 1.803M10.5 7.606h3"/></svg>
+              Intern Evaluation Rubric (Weekly Score /5)
+            </div>
+          </div>
+
+          <div class="criteria-list">
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Output Completeness</h5>
+                <p>Are all weekly deliverables built, visible, and functional?</p>
+              </div>
+              <div class="criteria-points">5 pts</div>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>System Usability</h5>
+                <p>Can HR/Priyanshi interact with the tool without code modification?</p>
+              </div>
+              <div class="criteria-points">5 pts</div>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Technical Logic</h5>
+                <p>Is the code structured cleanly, avoiding unnecessary database bloat?</p>
+              </div>
+              <div class="criteria-points">5 pts</div>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Documentation & Handover</h5>
+                <p>Are source files, user guides, and limitations logged?</p>
+              </div>
+              <div class="criteria-points">5 pts</div>
+            </div>
+
+            <div class="criteria-item">
+              <div class="criteria-details">
+                <h5>Responsiveness to Feedback</h5>
+                <p>How quickly are reviewer comments corrected and updated?</p>
+              </div>
+              <div class="criteria-points">5 pts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

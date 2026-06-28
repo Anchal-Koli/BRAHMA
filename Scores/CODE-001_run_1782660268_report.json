@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "id": "CODE-001",
+    "difficulty": "Intermediate",
+    "task": "Implement JWT Authentication."
+  },
+  "execution": {
+    "timestamp": 1782660268,
+    "duration_seconds": 17.81,
+    "intervention_index": 0
+  },
+  "results": {
+    "scores": {
+      "accuracy": 9.4,
+      "architecture": 9.8,
+      "security": 9.1,
+      "code_quality": 10.0,
+      "final": 9.6
+    },
+    "metrics": {
+      "tests_passed": true,
+      "tests_failed_count": 0,
+      "coverage_percentage": 89.5,
+      "ruff_issues_count": 0,
+      "bandit_vulnerabilities": {
+        "high": 0,
+        "medium": 0,
+        "low": 9
+      }
+    }
+  }
+}

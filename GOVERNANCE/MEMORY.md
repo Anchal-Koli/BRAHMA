@@ -1,6 +1,7 @@
 # Project Memory Index
 
 - [[identity.md]]: Core identity, modes, and mandates.
+- [[BOOTSTRAP.md]]: Workspace startup sequence and behavioral rules.
 - [[PERSONA_RULES.md]]: Core persona routing and emotional priority protocols for BUDDY/BRAHMA.
 - [[ARCHITECTURE_PRINCIPLES.md]]: The Dynamic 50 Region Neural Mesh and Authority Rules.
 - [[COGNITIVE_REGIONS.md]]: Detailed definitions of specialized regions within the Neural Mesh.

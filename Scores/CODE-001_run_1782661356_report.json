@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "id": "CODE-001",
+    "difficulty": "Intermediate",
+    "task": "Implement JWT Authentication.",
+    "repeatability_target": "",
+    "allowed_variance": "",
+    "environment": {
+      "os_baseline": "Cross-platform (Windows / Linux / macOS)",
+      "runtime": "Python 3.10+",
+      "database": "Relational Database (SQLite / PostgreSQL)",
+      "target_core_dependencies": "",
+      "execution_command": "Test suite runner (e.g., python manage.py test)"
+    },
+    "acceptance_criteria": [
+      {
+        "id": "AC-01",
+        "title": "AC-01: User Registration Unique Constraints",
+        "details": {
+          "given": "A registration payload with an email address that already exists in the database.",
+          "when": "Registration endpoint is called.",
+          "then": "Registration must be rejected and prevent duplicate user creation.",
+          "verification": "Automated test asserting boundary rejections.",
+          "evidence": "HTTP 400 Bad Request with field-specific email validation error."
+        }
+      },
+      {
+        "id": "AC-02",
+        "title": "AC-02: Password Policy Enforcement",
+        "details": {
+          "given": "A registration payload with a weak password (violating configured security policies).",
+          "when": "Registration endpoint is called.",
+          "then": "Registration must validate the password and reject it against password policy guidelines.",
+          "verification": "Automated test asserting validation rejections.",
+          "evidence": "HTTP 400 Bad Request with specific password validation messages."
+        }
+      },
+      {
+        "id": "AC-03",
+        "title": "AC-03: Token Generation on Login",
+        "details": {
+          "given": "Valid registered user credentials.",
+          "when": "Login endpoint is called.",
+          "then": "Server must return both a valid Access Token and a Refresh Token.",
+          "verification": "Automated test inspecting payload dictionary keys.",
+          "evidence": "HTTP 200 OK containing JSON payload with access and refresh token fields."
+        }
+      },
+      {
+        "id": "AC-04",
+        "title": "AC-04: API Token Authorization Guard",
+        "details": {
+          "given": "A protected API endpoint.",
+          "when": "A request is sent without a valid Bearer token in the Authorization header.",
+          "then": "Access to the resource must be blocked.",
+          "verification": "Automated test with cleared request credentials.",
+          "evidence": "HTTP 401 Unauthorized."
+        }
+      },
+      {
+        "id": "AC-05",
+        "title": "AC-05: Refresh Token Rotation",
+        "details": {
+          "given": "A valid refresh token.",
+          "when": "Token refresh endpoint is called.",
+          "then": "Server must return a new access token and invalidate (blacklist) the old refresh token.",
+          "verification": "Automated test asserting rotation and subsequent invalidation.",
+          "evidence": "HTTP 200 OK on first request, followed by HTTP 401 Unauthorized on subsequent reuse of the rotated token."
+        }
+      },
+      {
+        "id": "AC-06",
+        "title": "AC-06: JWT Token Invalidation (Logout Blacklist)",
+        "details": {
+          "given": "A valid refresh token.",
+          "when": "Logout endpoint is called.",
+          "then": "Refresh token must become invalid (blacklisted).",
+          "verification": "Automated test.",
+          "evidence": "HTTP 401 Unauthorized on subsequent attempts to use the blacklisted refresh token."
+        }
+      },
+      {
+        "id": "AC-07",
+        "title": "AC-07: Public Health Check Exemption",
+        "details": {
+          "given": "Public health check endpoint.",
+          "when": "Endpoint is called without any authorization headers.",
+          "then": "The endpoint must return system database status.",
+          "verification": "Automated test.",
+          "evidence": "HTTP 200 OK with JSON response including database health status indicators."
+        }
+      }
+    ],
+    "repeatability": "95%",
+    "variance": "<5%"
+  },
+  "execution": {
+    "timestamp": 1782661356,
+    "duration_seconds": 17.62,
+    "intervention_index": 0
+  },
+  "results": {
+    "scores": {
+      "accuracy": 9.4,
+      "architecture": 9.8,
+      "security": 9.1,
+      "code_quality": 10.0,
+      "final": 9.6
+    },
+    "metrics": {
+      "tests_passed": true,
+      "tests_failed_count": 0,
+      "coverage_percentage": 89.5,
+      "ruff_issues_count": 0,
+      "bandit_vulnerabilities": {
+        "high": 0,
+        "medium": 0,
+        "low": 9
+      }
+    }
+  }
+}

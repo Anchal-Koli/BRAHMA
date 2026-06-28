@@ -1,0 +1,13 @@
+django>=5.0
+djangorestframework
+djangorestframework-simplejwt
+python-dotenv
+psycopg2-binary
+sentry-sdk
+django-cors-headers
+pgvector
+bleach
+ruff
+bandit
+coverage
+
