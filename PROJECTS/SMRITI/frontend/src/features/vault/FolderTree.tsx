@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useVaultStore } from '../../store/vaultStore';
+import { useNoteStore } from '../../store/noteStore';
 import type { Folder } from '../../api/folders';
+import type { Note } from '../../api/notes';
 import './FolderTree.css';
 
 interface FolderNodeProps {
   folder: Folder;
   allFolders: Folder[];
+  allNotes: Note[];
   depth: number;
 }
 
-const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) => {
+const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, allNotes, depth }) => {
   const { currentFolderId, setCurrentFolderId, renameFolder, deleteFolder, createFolder } = useVaultStore();
+  const { activeNote, setActiveNote, createNote } = useNoteStore();
+  
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(folder.name);
@@ -18,16 +23,16 @@ const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) =>
   const [isCreatingSub, setIsCreatingSub] = useState(false);
   const [subFolderName, setSubFolderName] = useState('');
 
-  const children = allFolders.filter((f) => f.parent === folder.id);
-  const hasChildren = children.length > 0;
+  const childrenFolders = allFolders.filter((f) => f.parent === folder.id);
+  const childrenNotes = allNotes.filter((n) => n.folder === folder.id);
+  
+  const hasChildren = childrenFolders.length > 0 || childrenNotes.length > 0;
   const isSelected = currentFolderId === folder.id;
 
   const handleSelect = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentFolderId(folder.id);
-    if (hasChildren) {
-      setIsExpanded(!isExpanded);
-    }
+    setIsExpanded(!isExpanded);
   };
 
   const handleRenameSubmit = async (e: React.FormEvent) => {
@@ -56,13 +61,23 @@ const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) =>
       setIsCreatingSub(false);
       setIsExpanded(true);
     } catch (err) {
-      // Handled by store error state
+      // Handled by store
+    }
+  };
+
+  const handleCreateNoteClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await createNote('Untitled Note', folder.id);
+      setIsExpanded(true);
+    } catch (err) {
+      // Handled by store
     }
   };
 
   const handleDeleteClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (window.confirm(`Are you sure you want to delete folder "${folder.name}"? This will delete all subfolders.`)) {
+    if (window.confirm(`Are you sure you want to delete folder "${folder.name}"? This will delete all subfolders and notes.`)) {
       try {
         await deleteFolder(folder.id);
       } catch (err) {
@@ -110,7 +125,14 @@ const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) =>
               onClick={() => setIsCreatingSub(true)}
               title="New Subfolder"
             >
-              +
+              +📁
+            </button>
+            <button 
+              className="action-btn" 
+              onClick={handleCreateNoteClick}
+              title="New Note"
+            >
+              +📄
             </button>
             <button 
               className="action-btn" 
@@ -130,7 +152,7 @@ const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) =>
         )}
       </div>
 
-      {/* Subfolder input field inline */}
+      {/* Inline Subfolder creation form */}
       {isCreatingSub && (
         <div style={{ paddingLeft: '24px', margin: '4px 0' }}>
           <form onSubmit={handleCreateSubSubmit}>
@@ -148,16 +170,30 @@ const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) =>
         </div>
       )}
 
-      {/* Nested Children recursion */}
+      {/* Subfolders and Notes list */}
       {isExpanded && hasChildren && (
         <div className="folder-children">
-          {children.map((child) => (
+          {childrenFolders.map((child) => (
             <FolderNode
               key={child.id}
               folder={child}
               allFolders={allFolders}
+              allNotes={allNotes}
               depth={depth + 1}
             />
+          ))}
+          {childrenNotes.map((note) => (
+            <div
+              key={note.id}
+              className={`note-node-row ${activeNote?.id === note.id ? 'selected' : ''}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveNote(note);
+              }}
+            >
+              <span className="note-icon">📄</span>
+              <span className="note-name">{note.title || 'Untitled Note'}</span>
+            </div>
           ))}
         </div>
       )}
@@ -167,12 +203,15 @@ const FolderNode: React.FC<FolderNodeProps> = ({ folder, allFolders, depth }) =>
 
 export const FolderTree: React.FC = () => {
   const { folders, fetchFolders, createFolder, error, clearError } = useVaultStore();
+  const { notes, fetchNotes, createNote, activeNote, setActiveNote } = useNoteStore();
+  
   const [isCreatingRoot, setIsCreatingRoot] = useState(false);
   const [rootName, setRootName] = useState('');
 
   useEffect(() => {
     fetchFolders();
-  }, [fetchFolders]);
+    fetchNotes();
+  }, [fetchFolders, fetchNotes]);
 
   const handleCreateRootSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -189,18 +228,37 @@ export const FolderTree: React.FC = () => {
     }
   };
 
+  const handleCreateRootNote = async () => {
+    try {
+      await createNote('Untitled Note', null);
+    } catch (err) {
+      // Handled by store
+    }
+  };
+
   const rootFolders = folders.filter((f) => f.parent === null);
+  const rootNotes = notes.filter((n) => n.folder === null);
 
   return (
     <div className="folder-tree-container">
       <div className="folder-tree-header">
-        <span className="sidebar-title" style={{ marginBottom: 0 }}>Folders</span>
-        <button 
-          className="create-root-btn"
-          onClick={() => setIsCreatingRoot(true)}
-        >
-          + Add Root
-        </button>
+        <span className="sidebar-title" style={{ marginBottom: 0 }}>Workspace Explorer</span>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button 
+            className="create-root-btn"
+            onClick={() => setIsCreatingRoot(true)}
+            title="Add Root Folder"
+          >
+            +📁 Folder
+          </button>
+          <button 
+            className="create-root-btn"
+            onClick={handleCreateRootNote}
+            title="Add Root Note"
+          >
+            +📄 Note
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -210,7 +268,6 @@ export const FolderTree: React.FC = () => {
         </div>
       )}
 
-      {/* Root input field inline */}
       {isCreatingRoot && (
         <form onSubmit={handleCreateRootSubmit} style={{ margin: '4px 0' }}>
           <input
@@ -227,13 +284,31 @@ export const FolderTree: React.FC = () => {
       )}
 
       <div className="folder-list">
+        {/* Render root folders recursively */}
         {rootFolders.map((folder) => (
           <FolderNode
             key={folder.id}
             folder={folder}
             allFolders={folders}
+            allNotes={notes}
             depth={0}
           />
+        ))}
+
+        {/* Render root notes */}
+        {rootNotes.map((note) => (
+          <div
+            key={note.id}
+            className={`note-node-row ${activeNote?.id === note.id ? 'selected' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveNote(note);
+            }}
+            style={{ paddingLeft: '8px' }}
+          >
+            <span className="note-icon">📄</span>
+            <span className="note-name">{note.title || 'Untitled Note'}</span>
+          </div>
         ))}
       </div>
     </div>

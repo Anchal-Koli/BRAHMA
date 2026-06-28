@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/authStore';
+import { useNoteStore } from '../../store/noteStore';
 import { FolderTree } from '../../features/vault/FolderTree';
+import { NoteWorkspace } from '../../features/notes/NoteWorkspace';
 import './WorkspaceShell.css';
 
 export const WorkspaceShell: React.FC = () => {
   const { user, logoutUser, loading } = useAuthStore();
+  const { activeNote, createNote } = useNoteStore();
   
   // Collapse toggle states for side panels
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -12,6 +15,14 @@ export const WorkspaceShell: React.FC = () => {
   
   // Sidebar navigation active state placeholder
   const [activeMenu, setActiveMenu] = useState<'folders' | 'tags' | 'documents' | 'trash'>('folders');
+
+  const handleCreateNewNote = async () => {
+    try {
+      await createNote('Untitled Note', null);
+    } catch (err) {
+      // Handled by store
+    }
+  };
 
   return (
     <div className="workspace-shell animate-fade-in">
@@ -99,18 +110,22 @@ export const WorkspaceShell: React.FC = () => {
           </div>
         </aside>
 
-        {/* Central Workspace */}
+        {/* Central Workspace (Notes Editor / Empty State) */}
         <main className="central-workspace">
-          <div className="empty-state">
-            <div className="empty-state-icon">📝</div>
-            <h2 className="empty-state-title">No Note Selected</h2>
-            <p className="empty-state-description">
-              Select a note from your sidebar folder directory, or create a new note to start drafting.
-            </p>
-            <button className="empty-state-btn">
-              + New Note
-            </button>
-          </div>
+          {activeNote ? (
+            <NoteWorkspace />
+          ) : (
+            <div className="empty-state">
+              <div className="empty-state-icon">📝</div>
+              <h2 className="empty-state-title">No Note Selected</h2>
+              <p className="empty-state-description">
+                Select a note from your sidebar folder directory, or create a new note to start drafting.
+              </p>
+              <button className="empty-state-btn" onClick={handleCreateNewNote}>
+                + New Note
+              </button>
+            </div>
+          )}
         </main>
 
         {/* Right Collapsible Metadata Properties Panel */}
@@ -134,19 +149,23 @@ export const WorkspaceShell: React.FC = () => {
             </div>
             <div className="metadata-item">
               <span className="metadata-label">Words Count</span>
-              <span className="metadata-value">0 words</span>
+              <span className="metadata-value">{activeNote?.word_count || 0} words</span>
             </div>
             <div className="metadata-item">
               <span className="metadata-label">Character Count</span>
-              <span className="metadata-value">0 characters</span>
+              <span className="metadata-value">{activeNote?.content?.length || 0} chars</span>
             </div>
             <div className="metadata-item">
-              <span className="metadata-label">Associated Tags</span>
-              <span className="metadata-value" style={{ color: 'var(--text-muted)' }}>None</span>
+              <span className="metadata-label">Created At</span>
+              <span className="metadata-value">
+                {activeNote ? new Date(activeNote.created_at).toLocaleDateString() : 'N/A'}
+              </span>
             </div>
             <div className="metadata-item">
-              <span className="metadata-label">Storage Location</span>
-              <span className="metadata-value" style={{ color: 'var(--text-muted)' }}>Root folder</span>
+              <span className="metadata-label">Last Updated</span>
+              <span className="metadata-value">
+                {activeNote ? new Date(activeNote.updated_at).toLocaleDateString() : 'N/A'}
+              </span>
             </div>
           </div>
         </aside>

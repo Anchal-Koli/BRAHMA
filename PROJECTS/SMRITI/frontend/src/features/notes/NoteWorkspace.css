@@ -1,0 +1,128 @@
+.note-workspace-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--bg-primary);
+}
+
+.note-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+}
+
+.note-title-input {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  outline: none;
+  width: 60%;
+  letter-spacing: -0.015em;
+}
+
+.note-title-input::placeholder {
+  color: var(--text-muted);
+}
+
+.note-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.note-action-select {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.note-action-select:focus {
+  border-color: var(--border-focus);
+}
+
+.note-action-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.note-action-btn:hover {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.note-action-btn.delete:hover {
+  background: var(--accent-danger);
+  color: var(--text-primary);
+  border-color: var(--accent-danger);
+}
+
+/* Distraction-free Editor Area */
+.note-editor-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.note-textarea {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: inherit;
+}
+
+.note-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Footer Status Bar */
+.note-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.save-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.save-status.saving {
+  color: var(--accent-primary);
+}
+
+.save-status.saved {
+  color: var(--accent-success);
+}
